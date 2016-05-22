@@ -64,44 +64,6 @@ public class GamePlay : MonoBehaviour {
         turnOff(Cancel);
     }
 
-    public void BluetoothWrite(Piece currPlayer)
-    {
-        StreamWriter BluetoothFile = new StreamWriter("C:\\VirtualRealty\\BluetoothRead\\location.txt");
-        string RobotString = currPlayer.player.ID.ToString();
-        int distance;
-        if (lastLoc < currPlayer.location)
-        {
-            distance = currPlayer.location - lastLoc;
-        }
-        else
-        {
-            distance = 40 - lastLoc + currPlayer.location;
-        }
-        string dist_string;
-        if (distance < 10)
-        {
-            dist_string = "0" + distance.ToString();
-        }
-        else
-        {
-            dist_string = distance.ToString();
-        }
-        RobotString = RobotString + dist_string;
-        int corner_dist = (10 - (lastLoc % 10));
-        string corner_dist_string;
-        if (corner_dist < 10)
-        {
-            corner_dist_string = "0" + corner_dist.ToString();
-        }
-        else
-        {
-            corner_dist_string = corner_dist.ToString();
-        }
-        RobotString = RobotString + corner_dist_string;
-        BluetoothFile.WriteLine(RobotString);
-        BluetoothFile.Close();
-    }
-
 	public void Dice (Piece currPlayer, UnityPieceImage currPlayerUnity)	//probably an int later when taking care of front end
 	{
 		System.Random rnd = new System.Random ((int)DateTime.Now.Ticks);
@@ -113,7 +75,6 @@ public class GamePlay : MonoBehaviour {
 			if (currPlayer.doubcount == 3) {
                 lastLoc = currPlayer.location;
 				currPlayer.location = 10;
-                BluetoothWrite(currPlayer);
 				currPlayerUnity.MoveTo (currPlayer.location, currPlayer.player.ID);
                 currPlayer.isJailed = true;
 				currPlayer.doubcount = 0;
@@ -124,7 +85,6 @@ public class GamePlay : MonoBehaviour {
 				}
                 lastLoc = currPlayer.location;
 				currPlayer.location = (currPlayer.location + diceTotal) % 40;
-                BluetoothWrite(currPlayer);
                 currPlayerUnity.MoveTo (currPlayer.location, currPlayer.player.ID);
 			}
 
@@ -134,7 +94,6 @@ public class GamePlay : MonoBehaviour {
 			}
             lastLoc = currPlayer.location;
 			currPlayer.location = (currPlayer.location + diceTotal) % 40;
-            BluetoothWrite(currPlayer);
             currPlayerUnity.MoveTo (currPlayer.location, currPlayer.player.ID);
 			currPlayer.doubcount = 0;
 		}
@@ -523,7 +482,6 @@ public class GamePlay : MonoBehaviour {
                     { //go to jail
                         lastLoc = currPlayer.location;
                         currPlayer.location = 10;
-                        BluetoothWrite(currPlayer);
                         currPlayerUnity.MoveTo(currPlayer.location, currPlayer.player.ID);
                         currPlayer.isJailed = true;
                     }
@@ -609,7 +567,6 @@ public class GamePlay : MonoBehaviour {
                         { //go to jail
                             lastLoc = currPlayer.location;
                             currPlayer.location = 10;
-                            BluetoothWrite(currPlayer);
                             currPlayerUnity.MoveTo(currPlayer.location, currPlayer.player.ID);
                             currPlayer.isJailed = true;
                         }

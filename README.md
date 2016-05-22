@@ -1,2 +1,1 @@
-# VirtualRealty-without-robots
-the Virtual Realty project for Oculus Rift without custom robots
+Description and requirements available at zganger.github.io/VirtualRealty
